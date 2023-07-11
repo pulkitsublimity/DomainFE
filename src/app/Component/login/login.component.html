@@ -1,0 +1,86 @@
+<div class="body">
+  <div class="px-3 py-4 form-box">
+    <form [formGroup]="logForm"  fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="center">
+          <h2 class="">LogIn Details</h2>
+          <mat-icon class="mt-1">person</mat-icon>
+        </div>
+        <div class="text-center">
+              
+          <mat-form-field class="my-2 mx-2" style="width: 85%;height: 70px;" appearance="outline">
+            <mat-icon color="primary" matPrefix>email</mat-icon>
+            <mat-label class="">Email</mat-label>
+            <input
+            matInput
+            type="email"
+            formControlName="email"
+            [ngClass]="{
+              'is-invalid':
+                logForm.get('email').invalid &&
+                (logForm.get('email').dirty ||
+                  logForm.get('email').touched ||
+                  logForm.submitted),
+              'is-valid':
+                logForm.get('email').valid &&
+                (logForm.get('email').dirty ||
+                  logForm.get('email').touched ||
+                  logForm.submitted)}"/>
+            <mat-error
+            class="text-danger"
+            *ngIf="
+              logForm.get('email').invalid &&
+              (logForm.get('email').dirty ||
+                logForm.get('email').touched ||
+                logForm.submitted)">
+              <span *ngIf="logForm.get('email').errors?.required">
+                Please Enter Email
+              </span>
+              <span *ngIf="logForm.get('email').errors?.email">
+                Please Enter Valid Email
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="text-center">
+            <mat-form-field class="mx-2 my-2" style="width: 85%;height: 70px;" appearance="outline">
+              <mat-icon color="primary" matPrefix>key</mat-icon>
+              <mat-label class="">Password</mat-label>
+              <input
+                matInput
+                type="password"
+                #password
+                formControlName="password"
+                [ngClass]="{
+                  'is-invalid':
+                    logForm.get('password').invalid &&
+                    (logForm.get('password').dirty ||
+                      logForm.get('password').touched ||
+                      logForm.submitted),
+                  'is-valid':
+                    logForm.get('password').valid &&
+                    (logForm.get('password').dirty ||
+                      logForm.get('password').touched ||
+                      logForm.submitted)}" />
+                <mat-icon matIconSuffix (click)="show(password)" style="cursor: grab" id="eye">visibility</mat-icon>
+              <mat-error
+                class="text-danger"
+                *ngIf="
+                  logForm.get('password').invalid &&
+                  (logForm.get('password').dirty ||
+                    logForm.get('password').touched ||
+                    logForm.submitted)">
+                <span *ngIf="logForm.get('password').errors?.minlength"
+                  >Password should be of 8 digits
+                </span>
+                <span *ngIf="logForm.get('password').errors?.required"
+                  >Please Enter Your Password
+                </span>
+              </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="text-center my-3">
+          <button style="width: 150px;" mat-raised-button color="primary" (click)="onLog(logForm.value)">Log In</button>
+        </div>
+    </form>
+  </div>
+</div>

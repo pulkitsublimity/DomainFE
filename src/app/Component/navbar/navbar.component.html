@@ -1,0 +1,126 @@
+<mat-toolbar style="background-color: gray;" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+    </div>
+    <div style="color: white;">
+        DASHBOARD
+    </div>
+    <div fxLayout="row">
+        <div fxLayout="row">
+            <button mat-icon-button [matMenuTriggerFor]="usermenu" (click)="FetchUser()" style="color: white;">
+              <mat-icon>account_circle</mat-icon>
+             </button>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="topmenu" style="color: white;">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div>
+    <mat-menu #topmenu="matMenu">
+       <button mat-menu-item (click)="open2(content2)">Change Password</button>
+       <mat-divider></mat-divider>
+       <button class="text-center" mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+    <mat-menu #usermenu="matMenu"  yPosition="below" xPosition="before">
+       <h1 class="fs-2 text-center my-2">Profile</h1>
+       <mat-divider></mat-divider>
+       <h3 class="" mat-menu-item><b>User</b></h3>
+       <h3 class="" mat-menu-item>{{this.User}}</h3>
+       <mat-divider></mat-divider>
+       <h3 class="" mat-menu-item><b>Email</b></h3>
+       <h3 class="" mat-menu-item>{{this.Email}}</h3>
+    </mat-menu>
+</mat-toolbar>
+<mat-drawer-container #drawer mode="side">
+    <mat-drawer>
+        <mat-icon>person</mat-icon>
+    </mat-drawer>
+</mat-drawer-container>
+
+<ng-template #content2 let-modal>
+    <div class="modal-header d-flex justify-content-end">
+        <button
+            class="btn-close"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+            style="width: 15px;">
+        </button>
+    </div>
+    <h2 class="modal-title text-center fs-2 my-2" id="modal-basic-title">
+      Change your Password
+    </h2>
+    <div class="modal-body">
+        <form [formGroup]="ChangePassForm" (ngSubmit)="Submit(ChangePassForm.value)">
+            <div>
+                <mat-form-field style="width: 100%;">
+                    <input type="text" class="" matInput placeholder="Enter Your password..." formControlName="password"
+                    [ngClass]="{
+                        'is-invalid':
+                        ChangePassForm.get('password').invalid &&
+                        (ChangePassForm.get('password').dirty ||
+                            ChangePassForm.get('password').touched ||
+                            ChangePassForm.submitted),
+                        'is-valid':
+                        ChangePassForm.get('password').valid &&
+                        (ChangePassForm.get('password').dirty ||
+                            ChangePassForm.get('password').touched ||
+                            ChangePassForm.submitted)}"/>
+                    <mat-label>Enter New Password </mat-label>
+                    <mat-error class="text-danger"
+                    *ngIf="
+                        ChangePassForm.get('password').invalid &&
+                        (ChangePassForm.get('password').dirty ||
+                        ChangePassForm.get('password').touched ||
+                        ChangePassForm.submitted)">
+                        <span *ngIf="ChangePassForm.get('password').errors?.required"
+                            >Please Enter password
+                        </span>
+                        <span *ngIf="ChangePassForm.get('password').errors?.minlength"
+                            >Please Enter Valid password
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field style="width: 100%;">
+                    <input type="text" class="" matInput placeholder="Confirm Your password..." formControlName="conPassword"
+                    [ngClass]="{
+                        'is-invalid':
+                        ChangePassForm.get('conPassword').invalid &&
+                        (ChangePassForm.get('conPassword').dirty ||
+                            ChangePassForm.get('conPassword').touched ||
+                            ChangePassForm.submitted),
+                        'is-valid':
+                        ChangePassForm.get('conPassword').valid &&
+                        (ChangePassForm.get('conPassword').dirty ||
+                            ChangePassForm.get('conPassword').touched ||
+                            ChangePassForm.submitted)}"/>
+                    <mat-label>Confirm password </mat-label>
+                    <mat-error class="text-danger"
+                    *ngIf="
+                        ChangePassForm.get('conPassword').invalid &&
+                        (ChangePassForm.get('conPassword').dirty ||
+                        ChangePassForm.get('conPassword').touched ||
+                        ChangePassForm.submitted)">
+                        <span *ngIf="ChangePassForm.get('conPassword').errors?.required"
+                            >Please Enter password
+                        </span>
+                        <span *ngIf="ChangePassForm.get('conPassword').errors?.minlength"
+                            >Please Enter Valid password
+                        </span>
+                        <span *ngIf="ChangePassForm.errors?.comparePassword"
+                        >Password dosen't mismatch
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="[Submit(ChangePassForm.value) , modal.close()]">
+            Change
+        </button>
+    </div>
+  
+</ng-template>
